@@ -103,26 +103,26 @@ export default function App() {
           <div className="hidden xl:flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary/80 rounded-lg flex items-center justify-center shadow-md">
+                <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center shadow-lg border-2 border-blue-500">
                   <MapPin className="h-5 w-5 text-primary-foreground drop-shadow-sm" />
                 </div>
                 <div>
-                  <h1 className="text-lg font-semibold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent">
+                  <h1 className="text-lg font-bold railway-heading">
                     Railway Control Center
                   </h1>
-                  <p className="text-xs text-muted-foreground">Section A - Central District</p>
+                  <p className="text-xs text-muted-foreground font-medium">Section A - Central District</p>
                 </div>
               </div>
               
               <div className="flex items-center gap-2">
                 <Badge 
-                  variant={emergencyMode ? "destructive" : "secondary"}
-                  className="animate-pulse shadow-sm"
+                  className={emergencyMode ? "status-critical animate-pulse" : "status-operational"}
                 >
+                  <div className={`w-2 h-2 rounded-full mr-2 ${emergencyMode ? 'bg-red-500' : 'bg-green-500'} signal-light`}></div>
                   {emergencyMode ? "EMERGENCY MODE" : "NORMAL OPERATION"}
                 </Badge>
-                <Badge variant="outline" className="bg-green-50 dark:bg-green-950 text-green-700 dark:text-green-300 border-green-200 dark:border-green-800 shadow-sm">
-                  <div className="w-2 h-2 bg-green-500 rounded-full mr-1 animate-pulse"></div>
+                <Badge className="status-operational border shadow-sm">
+                  <div className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
                   System Operational
                 </Badge>
               </div>
@@ -130,20 +130,20 @@ export default function App() {
 
             <div className="flex items-center gap-4">
               <div className="text-right text-sm">
-                <div className="font-medium">Controller A</div>
+                <div className="font-bold">Controller A</div>
                 <div className="text-muted-foreground">Day Shift</div>
               </div>
-              <Button variant="outline" size="sm" onClick={toggleDarkMode} className="hover:scale-105 transition-transform">
+              <Button variant="outline" size="sm" onClick={toggleDarkMode} className="btn-railway hover:scale-105 transition-transform">
                 {darkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
               </Button>
-              <Button variant="outline" size="sm" className="hover:scale-105 transition-transform">
+              <Button variant="outline" size="sm" className="btn-railway hover:scale-105 transition-transform">
                 <Shield className="h-4 w-4 mr-2" />
                 Supervisor
               </Button>
               {criticalAlerts > 0 && (
-                <Button variant="destructive" size="sm" className="relative hover:scale-105 transition-transform animate-pulse">
+                <Button variant="destructive" size="sm" className="relative hover:scale-105 transition-transform animate-pulse shadow-lg">
                   <Bell className="h-4 w-4" />
-                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-600 text-white text-xs rounded-full flex items-center justify-center animate-bounce">
+                  <span className="absolute -top-1 -right-1 w-6 h-6 bg-red-600 text-white text-xs rounded-full flex items-center justify-center animate-bounce font-bold shadow-md">
                     {criticalAlerts}
                   </span>
                 </Button>
@@ -207,12 +207,12 @@ export default function App() {
 
                 {/* Compact Logo */}
                 <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 bg-gradient-to-br from-primary to-primary/80 rounded-md flex items-center justify-center shadow-md">
+                  <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center shadow-lg border border-blue-500">
                     <MapPin className="h-4 w-4 text-primary-foreground" />
                   </div>
                   <div>
-                    <h1 className="text-base font-semibold">Railway Control</h1>
-                    <p className="text-xs text-muted-foreground hidden sm:block">Section A</p>
+                    <h1 className="text-base font-bold railway-heading">Railway Control</h1>
+                    <p className="text-xs text-muted-foreground hidden sm:block font-medium">Section A</p>
                   </div>
                 </div>
               </div>
@@ -237,15 +237,12 @@ export default function App() {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Badge 
-                  variant={emergencyMode ? "destructive" : "secondary"}
-                  className="text-xs"
+                  className={`text-xs ${emergencyMode ? "status-critical" : "status-operational"}`}
                 >
+                  <div className={`w-1.5 h-1.5 rounded-full mr-1 ${emergencyMode ? 'bg-red-500' : 'bg-green-500'} signal-light`}></div>
                   {emergencyMode ? "EMERGENCY" : "NORMAL"}
                 </Badge>
-                <Badge 
-                  variant="outline" 
-                  className="bg-green-50 dark:bg-green-950 text-green-700 dark:text-green-300 border-green-200 dark:border-green-800 text-xs"
-                >
+                <Badge className="status-operational text-xs border">
                   <div className="w-1.5 h-1.5 bg-green-500 rounded-full mr-1 animate-pulse"></div>
                   Online
                 </Badge>
@@ -289,7 +286,7 @@ export default function App() {
 
           {/* Mobile Navigation Indicator - Shows current tab */}
           <div className="mb-6 xl:hidden">
-            <Card className="shadow-sm border-0 bg-gradient-to-r from-card to-card/95">
+            <Card className="railway-card shadow-lg">
               <CardContent className="p-4">
                 <div className="flex items-center gap-2">
                   {(() => {
@@ -299,7 +296,7 @@ export default function App() {
                         <currentItem.icon className="h-5 w-5" />
                         <span className="font-medium">{currentItem.label}</span>
                         {currentItem.badge && currentItem.badge > 0 && (
-                          <Badge variant="destructive" className="ml-auto">
+                          <Badge className="status-critical ml-auto font-bold">
                             {currentItem.badge}
                           </Badge>
                         )}
@@ -351,23 +348,38 @@ export default function App() {
       </div>
 
       {/* Status Bar */}
-      <footer className="border-t bg-gradient-to-r from-card via-card to-card/95 mt-auto backdrop-blur-sm relative z-10">
+      <footer className="border-t railway-card mt-auto backdrop-blur-sm relative z-10">
         <div className="container mx-auto px-4 py-2">
-          <div className="flex items-center justify-between text-xs text-muted-foreground">
+          <div className="flex items-center justify-between text-xs text-muted-foreground font-medium">
             <div className="flex items-center gap-4">
-              <span>Last Update: 14:25:33</span>
-              <span>Active Trains: 18</span>
-              <span>System Load: 78%</span>
+              <span className="flex items-center gap-1">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                Last Update: 14:25:33
+              </span>
+              <span className="flex items-center gap-1">
+                <Train className="h-3 w-3 text-blue-500" />
+                Active Trains: 18
+              </span>
+              <span className="flex items-center gap-1">
+                <Activity className="h-3 w-3 text-orange-500" />
+                System Load: 78%
+              </span>
             </div>
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-1">
-                <Activity className="h-3 w-3 text-green-500" />
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
                 <span className="text-green-600 dark:text-green-400">Online</span>
               </div>
               <Separator orientation="vertical" className="h-3" />
-              <span>AI Confidence: 94%</span>
-              <span>Network Latency: 12ms</span>
-              <span>Version 2.4.1</span>
+              <span className="flex items-center gap-1">
+                <Brain className="h-3 w-3 text-purple-500" />
+                AI Confidence: 94%
+              </span>
+              <span className="flex items-center gap-1">
+                <Zap className="h-3 w-3 text-yellow-500" />
+                Network: 12ms
+              </span>
+              <span className="font-bold">v2.4.1</span>
             </div>
           </div>
         </div>
